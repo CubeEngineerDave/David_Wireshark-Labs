@@ -1,1 +1,32 @@
+What’s been learned?
+This capture shows this device performing DNS lookups for multiple cloud services (Microsoft, Google, Sentry.io). DNS is the “phone book” of the internet — before any HTTP or HTTPS connection happens, this system must resolve domain names to IP addresses. These DNS queries reveal what services this system is trying to communicate with.
+What the capture shows (interpreting the screenshot)
+✔ 1. This device is making DNS queries
+Source: 10.218.252.191 Destination: 10.218.252.84 Protocol: DNS (UDP)
+This means the device is asking a DNS server on this network to resolve domain names.
+✔ 2. The domains being queried are cloud services
+We thus get DNS queries for:
+•	graph.microsoft.com
+•	edge.microsoft.com
+•	ingest.us.sentry.io
+•	adtrafficquality.google
+These are all legitimate cloud endpoints:
+•	Microsoft Graph → identity, cloud API calls
+•	Microsoft Edge → browser telemetry
+•	Sentry.io → error logging/telemetry
+•	Google adtrafficquality → ad fraud detection
+This is normal background traffic for Windows, Edge, and apps using cloud APIs.
+✔ 3. Some TCP retransmissions appear
+Also have:
+•	TCP retransmissions
+•	Possibly failed connections
+•	Possibly delayed responses
+This is common on Wi-Fi networks and not necessarily malicious.
+But in SOC work, retransmissions can also indicate:
+•	Firewall interference
+•	Packet loss
+•	Malware beaconing failing
+•	Scanning behavior
+•	Unstable connections
+This is why analysts pay attention to them.
 
