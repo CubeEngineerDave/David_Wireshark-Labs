@@ -1,1 +1,60 @@
+This capture shows this device performing DNS lookups for multiple cloud services (Microsoft, Bing, Sentry.io, Azure PrivateLink). DNS is the first step in almost every HTTPS transaction, and these queries reveal what services your system is trying to communicate with. This is normal background traffic for Windows, Edge, and cloud connected applications.
+This capture shows DNS resolution activity from a local device (10.218.252.191) to a DNS server (10.218.252.84). The device is resolving several cloud service domains, including Bing, Microsoft Graph, Sentry.io, and Azure PrivateLink identity endpoints. These domains are commonly used for cloud APIs, browser telemetry, and application error reporting. The presence of both DNS queries and responses indicates normal background communication as applications establish secure HTTPS connections. This capture demonstrates the first stage of an HTTP/HTTPS transaction: DNS resolution. 
+What this capture shows (interpreting the packets)
+✔ 1. The device is resolving multiple domains
+Source: 10.218.252.191 Destination: 10.218.252.84 Protocol: DNS (UDP)
+This means the device is asking the local DNS server to resolve domain names.
+✔ 2. The domains are all legitimate cloud services
+It captured DNS queries for:
+•	c.bing.com
+•	graph.microsoft.com
+•	ingest.us.sentry.io
+•	ags.privatelink.msidentity.com
+These domains correspond to:
+•	Microsoft Bing → search + telemetry
+•	Microsoft Graph → identity, cloud API calls
+•	Sentry.io → error logging/telemetry
+•	Azure PrivateLink (msidentity) → secure identity endpoints
+This is exactly what Windows, Edge, and cloud apps do in the background.
+✔ 3. It captured both DNS queries and DNS responses
+This is important because:
+•	Queries show what your device wants to talk to
+•	Responses show what IP addresses those domains resolve to
+This is the foundation of SOC investigation.
+✔ 4. This is normal background traffic
+Nothing here is malicious.
+But learning to interpret this traffic is essential because:
+•	Malware also uses DNS
+•	DNS tunneling is used for exfiltration
+•	Suspicious domains often appear first in DNS
+•	IoT devices reveal their behavior through DNS
+This is why DNS analysis is one of the first skills SOC analysts learn.
+********************************************************************
+✔ DNS is the first indicator of compromise
+Malware often reveals itself through:
+•	Strange domains
+•	Domain generation algorithms (DGA)
+•	High frequency queries
+•	Rare TLDs
+•	Failed lookups
+This capture shows normal traffic — but now we know what normal looks like.
+✔ DNS is how to detect IoT misbehavior
+In this Home SOC + OT/ICS Lab:
+•	Cameras
+•	Smart switches
+•	Thermostats
+•	IoT devices
+…all generate DNS traffic.
+If an IoT device starts querying:
+•	Unknown servers
+•	Foreign domains
+•	High frequency patterns
+That’s a red flag.
+✔ DNS is how you detect exfiltration
+Attackers often use:
+•	DNS tunneling
+•	TXT record abuse
+•	Long subdomains
+•	Encoded payloads
+Your capture is clean — but this is the foundation.
 
