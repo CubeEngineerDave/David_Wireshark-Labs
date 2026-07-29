@@ -1,1 +1,74 @@
 
+This capture shows TCP segments carrying encrypted TLS data over port 443, using IPv6. The packet highlighted is part of a larger TLS record, which Wireshark has reassembled across multiple TCP packets. Everything inside the payload is encrypted — so the hex pane looks like random bytes.
+What your TCP capture shows (packet-by-packet)
+1. Protocol: TCP → Port 443
+Port 443 = HTTPS.
+Even though my filter is tcp, Wireshark still shows TLS-related packets because TLS runs inside TCP.
+Your Info field:
+Code
+54414 → 443 [ACK] Seq=759 Ack=9036 Win=261888 Len=1370
+This means:
+•	My device is sending encrypted data to a server on port 443
+•	The packet contains 1370 bytes of encrypted TLS payload
+•	The TCP window is large (normal for high-speed connections)
+•	This is part of an ongoing HTTPS session
+2. IPv6 traffic
+My packet shows IPv6 addresses:
+•	Source: 2607:fb90:…
+•	Destination: 2607:7700:…
+This means my device is using IPv6 for secure web traffic — extremely common for:
+•	Mobile networks
+•	Cloud services
+•	CDNs (Akamai, Cloudflare, Microsoft)
+IPv6 often appears in TLS captures because modern services prefer it.
+TCP PDU reassembly
+The Info field includes:
+Code
+[TCP PDU reassembled in 1475786]
+This is important.
+It means:
+•	TLS records are larger than individual TCP packets
+•	Wireshark has combined multiple packets into one logical TLS message
+•	You’re seeing one piece of a larger encrypted record
+This is normal for:
+•	Large HTTPS responses
+•	Streaming content
+•	Cloud API calls
+•	Encrypted telemetry
+✔ 4. Encrypted TLS Application Data
+The hex pane shows random-looking bytes.
+That’s exactly what encrypted TLS data looks like.
+Humans cannot read:
+•	URLs
+•	Cookies
+•	Headers
+•	Content
+Because TLS encrypts everything after the handshake.
+What this all means:
+This capture shows TCP segments carrying encrypted TLS Application Data over port 443 using IPv6. The packet contains 1370 bytes of encrypted payload, and Wireshark indicates that this segment is part of a larger TLS record that has been reassembled across multiple TCP packets. Because TLS encrypts all application-layer content after the handshake, the payload appears as random bytes in the hex view. This capture demonstrates how Wireshark displays encrypted HTTPS traffic at the TCP layer and how TCP reassembly is used to reconstruct full TLS records.
+This is exactly how SOC analysts document encrypted traffic.
+Why this capture matters for your SOC/OT training:
+Even encrypted traffic reveals patterns
+SOC analysts can still analyze:
+•	Packet size
+•	Timing
+•	Retransmissions
+•	Sequence numbers
+•	Window sizes
+•	Server IP reputation
+•	Session behavior
+Even when the content is encrypted.
+This is how malware hides
+Malware often uses:
+•	TLS over TCP
+•	IPv6
+•	Encrypted C2 channels
+•	Large, reassembled records
+Knowing what normal looks like helps you spot anomalies.
+This is perfect material for your GitHub portfolio
+You now have:
+•	DNS captures
+•	ICMP captures
+•	TLS captures
+•	TCP captures
+This is exactly the progression SOC analysts learn.
