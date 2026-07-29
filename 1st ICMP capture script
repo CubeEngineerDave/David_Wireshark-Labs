@@ -1,0 +1,62 @@
+This capture shows ICMP Echo Requests being sent out, but no Echo Replies coming back. This means this device is pinging a remote host that is not responding to ICMP — which is extremely common on the modern internet.
+
+What can be learned from this capture?
+This capture shows ICMP Echo Requests sent from my device (10.218.252.84) to a remote host (23.47.72.18). Wireshark indicates “no response found,” which means the destination host did not return ICMP Echo Replies. This behavior is normal for many internet-facing servers, which block ICMP for security reasons. The capture demonstrates how ICMP requests appear in Wireshark and highlights that the absence of replies does not necessarily indicate a network failure.
+What this capture shows (packet-by-packet)
+1. Source IP: 10.218.252.84
+This is your device.
+2. Destination IP: 23.47.72.18
+This is the host you pinged.
+3. Protocol: ICMP
+Specifically:
+•	Echo (ping) request
+•	id=0x0001
+•	seq=4 and seq=5
+•	ttl=128
+4. Info: “no response found!”
+This is Wireshark saying:
+“See’s my ping requests, but the target never replied.”
+This is not an error — it’s normal behavior.
+⭐ Why there is no response
+Most public servers block ICMP for security reasons.
+Reasons include:
+•	Preventing network mapping
+•	Preventing DDoS amplification
+•	Reducing attack surface
+•	Avoiding unnecessary load
+So when pinging:
+•	Microsoft
+•	Google
+•	Akamai
+•	Cloudflare
+•	AWS
+•	Azure
+•	Many CDNs
+… often there’s no reply.
+This capture shows exactly that.
+⭐ What this means in SOC / cybersecurity terms
+This is actually a valuable learning moment, because SOC analysts need to understand:
+✔ Not all hosts respond to ping
+A lack of ICMP reply does not mean:
+•	The host is down
+•	The network is broken
+•	The packet was dropped
+•	Your system is misconfigured
+It simply means:
+“The host does not allow ICMP echo replies.”
+✔ ICMP is often blocked at firewalls
+Many enterprise networks block:
+•	ICMP Echo Reply
+•	ICMP Echo Request
+•	ICMP Timestamp
+•	ICMP Router Discovery
+This is part of defense-in-depth.
+✔ ICMP is still useful for diagnostics
+Even without replies, we can still:
+•	See outbound ICMP
+•	Confirm routing
+•	Analyze TTL
+•	Inspect packet structure
+•	Verify interface selection
+This is exactly what is happening.
+
